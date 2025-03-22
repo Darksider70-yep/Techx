@@ -1,2 +1,2 @@
 # Techx
-Diabetes prediction web aap 
+Diabetes prediction web app
