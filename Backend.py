@@ -40,12 +40,22 @@ async def predict(data: DiabetesInput):
     feature_names = ["Pregnancies", "Glucose", "BloodPressure", "Insulin", "BMI", "Age"]
     input_df = pd.DataFrame(input_df, columns=feature_names)
 
+    # Print raw input values for debugging
+    print("Raw input values:", input_df)
+
     # Scale input
     input_scaled = scaler.transform(input_df)
+    
+    # Print scaled input values for debugging
+    print("Scaled input values:", input_scaled)
 
     # Make prediction
     prediction = model.predict(input_scaled)[0]
     probability = model.predict_proba(input_scaled)[0][1]  # Get probability of diabetes
+
+    # Print raw model outputs for debugging
+    print("Raw prediction:", prediction)
+    print("Raw probability:", probability)
 
     # Convert NumPy types to Python native types
     prediction = int(prediction)
