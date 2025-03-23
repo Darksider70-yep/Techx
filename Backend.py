@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import joblib
 import numpy as np
+import pandas as pd
 
 # Initialize FastAPI app
 app = FastAPI()
@@ -25,28 +26,22 @@ class DiabetesInput(BaseModel):
     Pregnancies: float
     Glucose: float
     BloodPressure: float
-    SkinThickness: float
     Insulin: float
     BMI: float
-    DiabetesPedigreeFunction: float
     Age: float
 
 @app.post("/predict")
 async def predict(data: DiabetesInput):
-    # Convert input data into a structured NumPy array with correct feature names
+    # Convert input data into a structured NumPy array
     input_df = np.array([[data.Pregnancies, data.Glucose, data.BloodPressure, 
-                        data.SkinThickness, data.Insulin, data.BMI, 
-                        data.DiabetesPedigreeFunction, data.Age]])
+                        data.Insulin, data.BMI, data.Age]])
 
     # Convert to Pandas DataFrame to preserve feature names
-    import pandas as pd
-    feature_names = ["Pregnancies", "Glucose", "BloodPressure", "SkinThickness", 
-                    "Insulin", "BMI", "DiabetesPedigreeFunction", "Age"]
+    feature_names = ["Pregnancies", "Glucose", "BloodPressure", "Insulin", "BMI", "Age"]
     input_df = pd.DataFrame(input_df, columns=feature_names)
 
     # Scale input
-    input_scaled = scaler.transform(input_df)  # Fixes warning
-
+    input_scaled = scaler.transform(input_df)
 
     # Make prediction
     prediction = model.predict(input_scaled)[0]
