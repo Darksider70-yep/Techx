@@ -8,13 +8,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import accuracy_score, classification_report, roc_auc_score
 from imblearn.over_sampling import SMOTE
 import joblib
-
-# Ensure required modules are installed
-try:
-    import micropip
-except ModuleNotFoundError:
-    import subprocess
-    subprocess.run(["pip", "install", "micropip"], check=True)
+import micropip
 
 # Load the reduced dataset
 data = pd.read_csv("diabetes_extended_large.csv")
